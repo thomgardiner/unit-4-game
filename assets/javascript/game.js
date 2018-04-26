@@ -57,11 +57,11 @@ $("#obi-wan").on("click", function(){
     charSelection = obiWan;
     console.log("Obi-wan has been selected.")
     selectable = false;
-    $("#darth-maul").remove();
-    $("#mace-windu").remove();
-    $("#yoda").remove();
-    statsBox();
-   // $("#character-selection").hide();
+    //$("#darth-maul").remove();
+    //$("#mace-windu").remove();
+    //$("#yoda").remove();
+    //statsBox();
+    $("#character-selection").hide();
 
 }});
 
@@ -70,11 +70,11 @@ $("#darth-maul").on("click", function(){
     charSelection = darthMaul;
     console.log("Darth Maul has been selected.")
     selectable = false;
-    $("#obi-wan").remove();
-    $("#mace-windu").remove();
-    $("#yoda").remove();
-    statsBox();
-    //$("#character-selection").hide();
+    //$("#obi-wan").remove();
+    //$("#mace-windu").remove();
+    //$("#yoda").remove();
+    //statsBox();
+    $("#character-selection").hide();
     
 }});
 
@@ -83,11 +83,11 @@ $("#mace-windu").on("click", function(){
     charSelection = maceWindu;
     console.log("Mace Windu has been selected.")
     selectable = false;
-    $("#obi-wan").remove();
-    $("#darth-maul").remove();
-    $("#yoda").remove();
-    statsBox();
-    //$("#character-selection").hide();
+    //$("#obi-wan").remove();
+    //$("#darth-maul").remove();
+    //$("#yoda").remove();
+    //statsBox();
+    $("#character-selection").hide();
     
 }});
 
@@ -96,11 +96,11 @@ $("#yoda").on("click", function(){
     charSelection = yoda;
     console.log("Yoda has been selected.")
     selectable = false;
-    $("#obi-wan").hide();
-    $("#darth-maul").hide();
-    $("#mace-windu").hide();
-    statsBox();
-    //$("#character-selection").hide();
+    //$("#obi-wan").remove();
+    //$("#darth-maul").remove();
+    //$("#mace-windu").remove();
+    //statsBox();
+    $("#character-selection").hide();
 }});
 
 
