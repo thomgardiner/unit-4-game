@@ -1,0 +1,33 @@
+.container{
+    width: 80%;
+    margin: auto;
+}
+
+#character-selection{
+    width: 850px;
+    margin: auto;
+}
+
+#stats-box{
+    width: 300px;
+    margin-left: 13%;
+}
+
+#obi-wan{
+    height: 200px;
+    width: 200px;
+}
+
+#darth-maul{
+    height: 200px;
+    width: 200px;
+}
+
+
+.char-image{
+    border-radius: 5px;
+    border-color: black;
+    border-style: solid;
+    border-width: 1px;
+    box-shadow: 2px 7px 42px -10px rgba(15, 15, 15, 0.75);
+}
