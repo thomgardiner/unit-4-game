@@ -112,3 +112,11 @@ html{
     border-width: 1px;
     border-color: red;
 }
+
+.win-message{
+    font-size: 300%;
+    margin: auto;
+    text-align: center;
+    padding-top: 100px;
+    line-height: 10px;
+}

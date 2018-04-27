@@ -1,3 +1,14 @@
+let charSelection = null;
+let enemySelection = null;
+let selectable = true;
+let damageBonus = 1.0;
+let enemyIndex = 0;
+let hasWon = false;
+
+let enemyList = [];
+
+
+
 // character object creator
 const character = function(name, hp, ap, cap, imag) {
     this.name = name;
@@ -104,8 +115,8 @@ const enemyUpdate = function (){
     }
   }
     else{
-        console.log("DONE!");
-        $("#message-box").html('You win!');
+        clearBoard();
+        playerWins();
     }
 
 }
@@ -130,14 +141,32 @@ const enemyTargeted = function (){
 
 }
 
+
+const playerWins = function () {
+    let winMessage = $("<div>");
+    winMessage.addClass("win-message");
+    winMessage.html('<span>' + charSelection.name + ' wins! </span>');
+    $("#enemy-box").append(winMessage);
+    $("#message-box").html('Refresh the page to play again.')
+}
+
+const playerLoses = function () {
+    let loseMessage = $("<div>");
+    loseMessage.addClass("win-message");
+    loseMessage.html('<span>' + charSelection.name + ' loses! </span>');
+    $("#enemy-box").append(loseMessage);
+    $("#message-box").html('Refresh the page to play again.')
+
+}
+
 //player damage function
 
 const playerDamage = function(dmg){
     charSelection.hp = charSelection.hp - dmg;
     $(".player-hp").html('Health: ' + charSelection.hp);
     if(charSelection.hp <= 0){
-        console.log("You lose.");
-        $("#message-box").html('You have died.')
+        clearBoard();
+        playerLoses();
     }
 }
 
@@ -159,8 +188,8 @@ const enemyDamage = function(dmg){
         $(".targeted").addClass("dead");
         $(".dead").fadeOut(2000, function(){
             clearBoard();
+            $("#message-box").html('');
             enemyUpdate();
-            $("#message-box").html('')
         })
         //setTimeout(function(){ 
     }
@@ -181,6 +210,73 @@ const findEnemy = function(arr, value){
    }
 }
 
+
+const populateObjects = function(arr){
+
+    enemyList = [droid1,droid2,droid3];
+
+    for(i=0; i < enemyList.length; i++){
+        enemyList[i].hp = 150;
+    }
+
+    obiWan.hp = 200;
+    darthMaul.hp = 250;
+    maceWindu.hp = 170;
+    yoda.hp = 125;
+
+    damageBonus = 1.0;
+}
+
+const resetBoard = function (){
+    $("#character-box").remove();
+    $("#enemy-container").remove();
+
+    let newCharSelect= $("<div>");
+    newCharSelect.attr("id", "character-selection");
+    $("#main-container").append(newCharSelect);
+
+}
+
+const createCharSel = function () {
+    //obi-wan
+    let obi = $("<img>");
+    obi.attr('class', "char-image")
+    obi.attr('src', 'assets/images/' + obiWan.imag);
+    obi.attr("id", "obi-wan");
+    $("#character-selection").append(obi);
+
+    let darth = $("<img>");
+    darth.attr('class', "char-image")
+    darth.attr('src', 'assets/images/' + darthMaul.imag);
+    darth.attr("id", "darth-maul");
+    $("#character-selection").append(darth);
+
+    let mace = $("<img>");
+    mace.attr('class', "char-image")
+    mace.attr('src', 'assets/images/' + maceWindu.imag);
+    mace.attr("id", "mace-windu");
+    $("#character-selection").append(mace);
+
+    let yoda1 = $("<img>");
+    yoda1.attr('class', "char-image")
+    yoda1.attr('src', 'assets/images/' + yoda.imag);
+    yoda1.attr("id", "yoda");
+    $("#character-selection").append(yoda1);
+    
+}
+
+const useless = function (){
+
+  
+}
+
+const resetGame = function(){
+    resetBoard();
+    populateObjects();
+    createCharSel();
+    selectable = true;
+}
+
 //======================================
 
 //create character objects
@@ -191,19 +287,11 @@ let yoda = new character("Yoda", 125, 80, 25, "yoda.jpeg");
 
 //create enemy objects
 
-let droid1 = new enemy("X-1", 150, 25, "droid.jpeg", "droid-1");
-let droid2 = new enemy("X-2", 150, 25, "droid.jpeg", "droid-2");
-let droid3 = new enemy("X-3", 150, 25, "droid.jpeg", "droid-3");
-let enemyList = [droid1, droid2, droid3];
+let droid1 = new enemy("X-1", 150, 20, "droid.jpeg", "droid-1");
+let droid2 = new enemy("X-2", 150, 30, "droid.jpeg", "droid-2");
+let droid3 = new enemy("X-3", 150, 40, "droid.jpeg", "droid-3");
+enemyList = [droid1, droid2, droid3];
 
-let charSelection = null;
-let enemySelection = null;
-let selectable = true;
-let damageBonus = 1.0;
-let enemyIndex = 0;
-let hasWon = false;
-
-enemySelection = droid1;
 
 
 //======================================
@@ -212,7 +300,7 @@ $(document).ready(function() {
 
 //character selection logic
 
-$("#obi-wan").on("click", function(){
+$("body").on('click', '#obi-wan', function(){
     if(selectable == true){
         charSelection = obiWan;
         console.log("Obi-wan has been selected.")
@@ -222,7 +310,7 @@ $("#obi-wan").on("click", function(){
     gameBoard();
 }});
 
-$("#darth-maul").on("click", function(){
+$("body").on("click", "#darth-maul", function(){
     if(selectable == true){
         charSelection = darthMaul;
         console.log("Darth Maul has been selected.")
@@ -232,7 +320,7 @@ $("#darth-maul").on("click", function(){
     gameBoard();
 }});
 
-$("#mace-windu").on("click", function(){
+$("body").on("click", "#mace-windu", function(){
     if(selectable == true){
         charSelection = maceWindu;
         console.log("Mace Windu has been selected.")
@@ -242,7 +330,7 @@ $("#mace-windu").on("click", function(){
     gameBoard();
 }});
 
-$("#yoda").on("click", function(){
+$("body").on("click", "#yoda", function(){
     if(selectable == true){
     charSelection = yoda;
     console.log("Yoda has been selected.")
