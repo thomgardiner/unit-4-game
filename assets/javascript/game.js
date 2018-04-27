@@ -1,10 +1,3 @@
-let charSelection = null;
-let enemySelection = null;
-let selectable = true;
-let damageBonus = 1.0;
-let enemyIndex = 0;
-let hasWon = false;
-
 // character object creator
 const character = function(name, hp, ap, cap, imag) {
     this.name = name;
@@ -100,12 +93,19 @@ const clearBoard = function (){
 
 //updates the board with the remaining objects in the enemyList array
 const enemyUpdate = function (){
+    if(enemyList.length > 0){
     for(i=0; i < enemyList.length; i++){
         let newEnemy = $("<div>");
         newEnemy.addClass("enemy-target-box");
         newEnemy.attr("id", enemyList[i].id);
         newEnemy.html('<img class="char-image" src="assets/images/' + enemyList[i].imag + '"</img>');
         $("#enemy-box").append(newEnemy);
+        $("#message-box").html('Click to select an enemy!');
+    }
+  }
+    else{
+        console.log("DONE!");
+        $("#message-box").html('You win!');
     }
 
 }
@@ -125,6 +125,7 @@ const enemyTargeted = function (){
                       '<span class="enemy-hp"> Health: ' + enemySelection.hp + '</span><br>' +
                       '<span class="enemy-cap"> Counter Attack Power: ' + enemySelection.cap + '</span>');
     $("#enemy-box").append(enemyInfoBox);
+    $("#message-box").html('Click to attack your target!')
 
 
 }
@@ -142,26 +143,30 @@ const playerDamage = function(dmg){
 
 //enemy damage function
 const enemyDamage = function(dmg){
+    if(enemySelection.hp > 0){
     let totalDmg = dmg * damageBonus;
     $("#message-box").html('You hit for ' + totalDmg + ' damage! You take ' + enemySelection.cap + ' damage!');
     enemySelection.hp = enemySelection.hp - totalDmg;
     $(".enemy-hp").html('Health: ' + enemySelection.hp);
+   
     if(enemySelection.hp <= 0){
         console.log("Enemy killed.");
         findEnemy(enemyList, enemySelection);
         console.log(enemyIndex);
         enemyList.splice(enemyIndex, 1);
+
         $("#message-box").html(enemySelection.name + ' has died.')
         $(".targeted").addClass("dead");
-        $(".dead").fadeOut("slow", function(){
+        $(".dead").fadeOut(2000, function(){
             clearBoard();
             enemyUpdate();
-
+            $("#message-box").html('')
         })
         //setTimeout(function(){ 
     }
     damageBonus+= .5;
     playerDamage(enemySelection.cap);
+  }
 }
 
 //find location of enemy in array
@@ -176,13 +181,13 @@ const findEnemy = function(arr, value){
    }
 }
 
-
+//======================================
 
 //create character objects
 let obiWan = new character("Obi-Wan", 200, 50, 25, "obi-wan.png");
-let darthMaul = new character("Darth Maul", 200, 50, 25, "darth-maul.jpg");
-let maceWindu = new character("Mace Windu", 200, 50, 25, "mace-windu.jpeg");
-let yoda = new character("Yoda", 200, 50, 25, "yoda.png");
+let darthMaul = new character("Darth Maul", 250, 30, 25, "darth-maul.jpg");
+let maceWindu = new character("Mace Windu", 170, 55, 25, "mace-windu.jpeg");
+let yoda = new character("Yoda", 125, 80, 25, "yoda.png");
 
 //create enemy objects
 
@@ -191,7 +196,17 @@ let droid2 = new enemy("X-2", 150, 25, "droid1.png", "droid-2");
 let droid3 = new enemy("X-3", 150, 25, "droid1.png", "droid-3");
 let enemyList = [droid1, droid2, droid3];
 
+let charSelection = null;
+let enemySelection = null;
+let selectable = true;
+let damageBonus = 1.0;
+let enemyIndex = 0;
+let hasWon = false;
+
 enemySelection = droid1;
+
+
+//======================================
 
 $(document).ready(function() {
 
@@ -259,8 +274,9 @@ $('body').on('click', '#droid-3', function(){
 });
 
 $('body').on('click', '.targeted', function(){
-    console.log("pewpewpew");
+    if(enemySelection.hp > 0){
     enemyDamage(charSelection.ap);
+    }
 });
 
 
