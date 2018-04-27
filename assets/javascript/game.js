@@ -187,7 +187,7 @@ const findEnemy = function(arr, value){
 let obiWan = new character("Obi-Wan", 200, 50, 25, "obi-wan.jpeg");
 let darthMaul = new character("Darth Maul", 250, 30, 25, "darth-maul.jpg");
 let maceWindu = new character("Mace Windu", 170, 55, 25, "mace-windu.jpeg");
-let yoda = new character("Yoda", 125, 80, 25, "yoda.png");
+let yoda = new character("Yoda", 125, 80, 25, "yoda.jpeg");
 
 //create enemy objects
 
