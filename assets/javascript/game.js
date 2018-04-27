@@ -7,6 +7,8 @@ let hasWon = false;
 
 let enemyList = [];
 
+let gameOver = false;
+
 
 
 // character object creator
@@ -79,7 +81,7 @@ const gameBoard = function(){
     infoBox.html('<span class="player-name"> Name: ' + charSelection.name + '</span><br>' +
                  '<span class="player-hp"> Health: ' + charSelection.hp + '</span><br>' +
                  '<span class="player-ap"> Attack Power: ' + charSelection.ap + '</span><br>' +
-                 '<span class="player-cap"> Counter Attack Power: ' + charSelection.cap + '</span>');
+                 '<span class="damage-bonus"> Damage Bonus: ' + damageBonus + 'x </span>');
     $("#character-box").append(infoBox);
 
     //enemy area creation
@@ -145,17 +147,19 @@ const enemyTargeted = function (){
 const playerWins = function () {
     let winMessage = $("<div>");
     winMessage.addClass("win-message");
-    winMessage.html('<span>' + charSelection.name + ' wins! </span>');
+    winMessage.html('<span>' + charSelection.name + ' wins! Click here to play again. </span>');
     $("#enemy-box").append(winMessage);
-    $("#message-box").html('Refresh the page to play again.')
+    $("#message-box").html('')
+    gameOver = true;
 }
 
 const playerLoses = function () {
     let loseMessage = $("<div>");
     loseMessage.addClass("win-message");
-    loseMessage.html('<span>' + charSelection.name + ' loses! </span>');
+    loseMessage.html('<span>' + charSelection.name + ' loses! Click here to play again. </span>');
     $("#enemy-box").append(loseMessage);
-    $("#message-box").html('Refresh the page to play again.')
+    $("#message-box").html('')
+    gameOver = true;
 
 }
 
@@ -194,6 +198,7 @@ const enemyDamage = function(dmg){
         //setTimeout(function(){ 
     }
     damageBonus+= .5;
+    $(".damage-bonus").html('Damage Bonus: ' + damageBonus + 'x');
     playerDamage(enemySelection.cap);
   }
 }
@@ -212,9 +217,10 @@ const findEnemy = function(arr, value){
 
 
 const populateObjects = function(arr){
-
+    //repopulates enemy array
     enemyList = [droid1,droid2,droid3];
 
+    //reset enemy and player health and damage bonus
     for(i=0; i < enemyList.length; i++){
         enemyList[i].hp = 150;
     }
@@ -262,12 +268,9 @@ const createCharSel = function () {
     yoda1.attr('src', 'assets/images/' + yoda.imag);
     yoda1.attr("id", "yoda");
     $("#character-selection").append(yoda1);
+
+    $("#message-box").html('Pick a character!');
     
-}
-
-const useless = function (){
-
-  
 }
 
 const resetGame = function(){
@@ -275,6 +278,7 @@ const resetGame = function(){
     populateObjects();
     createCharSel();
     selectable = true;
+    gameOver = false;
 }
 
 //======================================
@@ -365,9 +369,15 @@ $('body').on('click', '.targeted', function(){
     if(enemySelection.hp > 0){
     enemyDamage(charSelection.ap);
     }
+    
 });
 
+$('body').on('click', '#enemy-container', function(){
+    if(gameOver == true) {
+        resetGame();
+    }
 
+});
 
 
 });
