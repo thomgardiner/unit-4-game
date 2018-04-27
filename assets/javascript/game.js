@@ -184,16 +184,16 @@ const findEnemy = function(arr, value){
 //======================================
 
 //create character objects
-let obiWan = new character("Obi-Wan", 200, 50, 25, "obi-wan.png");
+let obiWan = new character("Obi-Wan", 200, 50, 25, "obi-wan.jpeg");
 let darthMaul = new character("Darth Maul", 250, 30, 25, "darth-maul.jpg");
 let maceWindu = new character("Mace Windu", 170, 55, 25, "mace-windu.jpeg");
 let yoda = new character("Yoda", 125, 80, 25, "yoda.png");
 
 //create enemy objects
 
-let droid1 = new enemy("X-1", 150, 25, "droid1.png", "droid-1");
-let droid2 = new enemy("X-2", 150, 25, "droid1.png", "droid-2");
-let droid3 = new enemy("X-3", 150, 25, "droid1.png", "droid-3");
+let droid1 = new enemy("X-1", 150, 25, "droid.jpeg", "droid-1");
+let droid2 = new enemy("X-2", 150, 25, "droid.jpeg", "droid-2");
+let droid3 = new enemy("X-3", 150, 25, "droid.jpeg", "droid-3");
 let enemyList = [droid1, droid2, droid3];
 
 let charSelection = null;
